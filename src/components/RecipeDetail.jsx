@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { fetchRecipe } from '../utils/api';
 import Comments from './Comments';
 import Stars from './Stars';
+import { FaShareAlt, FaDownload } from 'react-icons/fa';
 
 const RecipeDetail = () => {
   const { id } = useParams();
@@ -77,15 +78,15 @@ const RecipeDetail = () => {
         <div className="recipe-actions flex space-x-4 mt-6">
           <button
             onClick={handleShare}
-            className="flex-1 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors"
+            className="flex-1 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors flex items-center justify-center"
           >
-            Share URL
+            <FaShareAlt className="mr-2" /> Share URL
           </button>
           <button
             onClick={handleDownload}
-            className="flex-1 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors"
+            className="flex-1 bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors flex items-center justify-center"
           >
-            Download Recipe
+            <FaDownload className="mr-2" /> Download Recipe
           </button>
         </div>
         <Comments recipeId={id} />

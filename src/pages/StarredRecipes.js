@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
-import { fetchRecipes } from '../utils/api';
+import { fetchStarredRecipes } from '../utils/api';
+import { FaHeart } from 'react-icons/fa';
 
-const RecipeList = () => {
+const StarredRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
-    fetchRecipes().then((response) => {
+    fetchStarredRecipes().then((response) => {
       setRecipes(response.data);
       setFilteredRecipes(response.data);
     });
@@ -40,7 +41,7 @@ const RecipeList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Recipes</h2>
+      <h2 className="text-2xl font-bold mb-4">Starred Recipes</h2>
       <input
         type="text"
         value={searchQuery}
@@ -69,6 +70,9 @@ const RecipeList = () => {
                   {recipe.name}
                 </h3>
                 <p className="text-gray-700 mt-2">{recipe.description}</p>
+                <div className="flex items-center justify-end">
+                  <FaHeart className="text-red-500" />
+                </div>
               </div>
             </Link>
           </div>
@@ -78,4 +82,4 @@ const RecipeList = () => {
   );
 };
 
-export default RecipeList;
+export default StarredRecipes;

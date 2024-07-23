@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { fetchRecipes } from '../utils/api';
+import { FaHeart } from 'react-icons/fa';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -69,6 +70,9 @@ const RecipeList = () => {
                   {recipe.name}
                 </h3>
                 <p className="text-gray-700 mt-2">{recipe.description}</p>
+                <div className="flex items-center justify-end">
+                  <FaHeart className="text-red-500" />
+                </div>
               </div>
             </Link>
           </div>
