@@ -15,7 +15,7 @@ export const createRecipe = (recipe) => api.post('/recipes', recipe);
 
 // Add a comment
 export const addComment = (recipeId, comment) =>
-  api.post('/comments', { recipe_id: recipeId, text: comment.text });
+  api.post('/comments', { recipe_id: recipeId, comment });
 
 // Add a star
 export const addStar = (recipeId) =>
@@ -26,6 +26,7 @@ export const removeStar = (recipeId) => api.delete(`/stars/${recipeId}`);
 
 // Fetch starred recipes
 export const fetchStarredRecipes = () => api.get('/stars');
+
 export const searchRecipes = (query) =>
   api.get('/recipes/search', { params: { query } }); // Added search API call
 

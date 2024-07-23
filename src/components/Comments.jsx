@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { addComment, fetchRecipe } from '../utils/api';
+import { addComment } from '../utils/api';
 
 const Comments = ({ recipeId }) => {
+  const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    fetchRecipe(recipeId)
-      .then((response) => {
-        setComments(response.data.comments || []); // Ensure comments is an array
-      })
-      .catch((error) => {
-        console.error('Error fetching recipe:', error);
-        setComments([]); // Set comments to an empty array in case of error
-      });
+    // Fetch existing comments for the recipe if needed
   }, [recipeId]);
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    addComment(recipeId, { comment: newComment })
+
+    addComment(recipeId, comment)
       .then((response) => {
         setComments([...comments, response.data]);
-        setNewComment('');
+        setComment('');
       })
       .catch((error) => {
         console.error('Error adding comment:', error);
@@ -29,29 +23,29 @@ const Comments = ({ recipeId }) => {
   };
 
   return (
-    <div className="mt-6">
-      <h3 className="text-xl font-semibold mb-2">Comments</h3>
-      <ul className="mb-4">
-        {comments.map((comment) => (
-          <li key={comment.id} className="mb-2">
-            <p>{comment.comment}</p>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={handleCommentSubmit} className="mb-4">
+    <div className="comments">
+      <form onSubmit={handleCommentSubmit}>
         <textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment..."
-          className="w-full p-2 border border-gray-300 rounded-md"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Your comment"
+          required
+          className="w-full p-2 mb-2 border border-gray-300 rounded-md"
         />
         <button
           type="submit"
-          className="mt-2 w-full bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors"
+          className="w-full bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors"
         >
           Submit
         </button>
       </form>
+      <ul>
+        {comments.map((comment, index) => (
+          <li key={index} className="border-b border-gray-300 py-2">
+            <p>{comment.comment}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
